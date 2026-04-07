@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AO1_PROG_MOVIL_3.controllers;
 
-    [ApiController]
-    [Route("api/contacto")]
+[ApiController]
+[Route("api/contacto")]
 
-    public class ContactoController : ControllerBase
+public class ContactoController : ControllerBase
 {
-    private readonly ContactoService contactoService;   
+    private readonly ContactoService contactoService;
 
     public ContactoController(ContactoService contactoService)
     {
@@ -22,5 +22,19 @@ namespace AO1_PROG_MOVIL_3.controllers;
         var contacto = contactoService.ObtenerPorId(id);
         if (contacto == null) return NotFound();
         return Ok(contacto);
+    }
+    [HttpPost("/add")]
+    public ActionResult CrearContacto([FromBody] Contacto nuevoContacto)
+    {
+        if (nuevoContacto == null)
+        {
+            return BadRequest("Los datos del contacto son requeridos");
+        }
+        var contacto = contactoService.Crear(nuevoContacto);
+        return CreatedAtAction(nameof(GetById), new { id = contacto.Id }, contacto);
+
+
+
+
     }
 }
