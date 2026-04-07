@@ -25,4 +25,17 @@ public class ContactoService
         contactos.Add(contacto);
         return contacto;
     }
+    public bool Eliminar (int Id)
+    {
+        var contacto = ObtenerPorId(Id);
+        if(contacto == null)
+        {
+            return false;
+        }
+        contactos.Remove(contacto);
+        return true;
+    }
+
+
+
 }

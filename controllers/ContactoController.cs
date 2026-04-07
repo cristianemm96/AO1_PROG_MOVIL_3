@@ -33,8 +33,17 @@ public class ContactoController : ControllerBase
         var contacto = contactoService.Crear(nuevoContacto);
         return CreatedAtAction(nameof(GetById), new { id = contacto.Id }, contacto);
 
+    }
 
+    [HttpDelete("eliminar/{id}")]
+    public ActionResult EliminarContacto( int id)
+    {
+        bool contactoEliminado = contactoService.Eliminar(id);
+        if (!contactoEliminado)
+        {
+            return NotFound($"No se encontro ningun contacto con el ID: {id}");
+        }
 
-
+        return Ok(new{mensaje = "El contacto fue eliminado correctamente"});
     }
 }
