@@ -36,7 +36,7 @@ public class ContactoController : ControllerBase
     }
 
     [HttpDelete("eliminar/{id}")]
-    public ActionResult EliminarContacto( int id)
+    public ActionResult EliminarContacto(int id)
     {
         bool contactoEliminado = contactoService.Eliminar(id);
         if (!contactoEliminado)
@@ -44,6 +44,17 @@ public class ContactoController : ControllerBase
             return NotFound($"No se encontro ningun contacto con el ID: {id}");
         }
 
-        return Ok(new{mensaje = "El contacto fue eliminado correctamente"});
+        return Ok(new { mensaje = "El contacto fue eliminado correctamente" });
+    }
+
+    [HttpPut("editar/{id}")]
+    public ActionResult EditarContacto(int id, [FromBody] Contacto contactoActualizado)
+    {
+        bool seEditoContacto = contactoService.Editar(id, contactoActualizado);
+        if (seEditoContacto)
+        {
+            return Ok(new { mensaje = "El contacto fue editado correctamente" });
+        }
+        return NotFound(new { mensaje = $"No se encontró ningún contacto con el ID: {id}" });
     }
 }

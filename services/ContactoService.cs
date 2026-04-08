@@ -25,17 +25,28 @@ public class ContactoService
         contactos.Add(contacto);
         return contacto;
     }
-    public bool Eliminar (int Id)
+    public bool Eliminar(int Id)
     {
         var contacto = ObtenerPorId(Id);
-        if(contacto == null)
+        if (contacto == null)
         {
             return false;
         }
         contactos.Remove(contacto);
         return true;
     }
-
-
+    public bool Editar(int Id, Contacto datosActualizados)
+    {
+        var contacto = ObtenerPorId(Id);
+        if (contacto == null)
+        {
+            return false;
+        }
+        contacto.Nombre = datosActualizados.Nombre;
+        contacto.Apellido = datosActualizados.Apellido;
+        contacto.Telefono = datosActualizados.Telefono;
+        contacto.Email = datosActualizados.Email;
+        return true;
+    }
 
 }
