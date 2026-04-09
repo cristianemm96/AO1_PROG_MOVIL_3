@@ -1,11 +1,13 @@
 using AO1_PROG_MOVIL_3.models;
 using AO1_PROG_MOVIL_3.services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AO1_PROG_MOVIL_3.controllers;
 
 [ApiController]
 [Route("api/contacto")]
+[Authorize]
 
 public class ContactoController : ControllerBase
 {
