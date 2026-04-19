@@ -20,21 +20,22 @@ public class AuthService
     public bool Login(string usuario, string clave)
     {
         return usuario == Usuario && clave == Clave;
-    }   
+    }
 
     public string GenerarToken(string usuario)
     {
-        var keyBytes = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
         var claims = new ClaimsIdentity();
-        
+
         claims.AddClaim(new Claim(ClaimTypes.Name, usuario));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = claims,
             Expires = DateTime.UtcNow.AddHours(1),
+            Issuer = _config["jwt:Issuer"],
+            Audience = _config["jwt:Audience"],
             SigningCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(keyBytes), 
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Secret"]!)),
             SecurityAlgorithms.HmacSha256Signature
         )
         };
